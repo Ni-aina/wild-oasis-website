@@ -45,7 +45,7 @@ export default function Page() {
         </div>
   
         <div className="relative aspect-square col-span-2">
-          <Image fill src="/about-2.jpg" alt="Family that manages The Wild Oasis" />
+          <Image fill sizes="100%" src="/about-2.jpg" alt="Family that manages The Wild Oasis" />
         </div>
   
         <div className="col-span-3">

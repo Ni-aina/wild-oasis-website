@@ -1,39 +1,65 @@
 "use client"
 
-const { useSearchParams, useRouter } = require("next/navigation")
+const { useSearchParams, useRouter, usePathname } = require("next/navigation")
 
 const Filter = ()=> {
 
     const searchParams = useSearchParams();
+    const pathname = usePathname();
     const router = useRouter();
 
+    const activeFilter = searchParams.get("capacity") ?? "all";
+
     const handleFilter = (filter)=> {
-        
+        const params = new URLSearchParams(searchParams);
+        params.set("capacity", filter);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
     return (
         <div className="flex">
-            <button className="p-3 border border-primary-900"
-                onClick={()=> handleFilter("all")}
+            <Button 
+                filter="all"
+                handleFilter={handleFilter}
+                activeFilter={activeFilter}
             >
                 All cabins
-            </button>
-            <button className="p-3 border border-primary-900"
-                onClick={()=> handleFilter("small")}
+            </Button>
+            <Button 
+                filter="small"
+                handleFilter={handleFilter}
+                activeFilter={activeFilter}
             >
                 small cabins
-            </button>
-            <button className="p-3 border border-primary-900"
-                onClick={()=> handleFilter("medium")}
+            </Button>
+            <Button 
+                filter="medium"
+                handleFilter={handleFilter}
+                activeFilter={activeFilter}
             >
                 medium cabins
-            </button>
-            <button className="p-3 border border-primary-900"
-                onClick={()=> handleFilter("large")}
+            </Button>
+            <Button 
+                filter="large"
+                handleFilter={handleFilter}
+                activeFilter={activeFilter}
             >
                 large cabins
-            </button>
+            </Button>
         </div>
+    )
+}
+
+function Button (
+    { filter, handleFilter, activeFilter, children }
+) {
+    return (
+        <button className={`p-3 border border-primary-900
+            ${filter === activeFilter && "bg-primary-700 text-primary-50"}`}
+            onClick={()=> handleFilter(filter)}
+        >
+            {children}
+        </button>
     )
 }
 
